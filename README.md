@@ -9,7 +9,7 @@
 - Users can report what they sold their vehicles for
 - Admins have to approve reported sales
 
-### Services
+### Endpoints
 
 | Method and Route   | Body or Query String                                         | Description                                    |
 | ------------------ | ------------------------------------------------------------ | ---------------------------------------------- |
@@ -18,3 +18,10 @@
 | GET `/reports`     | QS - `make, model, year, mileage, longitude, latitude`       | Get an estimate for the cars value             |
 | POST `/reports`    | Body - `{ make, model, year, mileage, longitude, latitude }` | Report how much a vehicle sold for             |
 | PATCH `/reports`   | Body - `{ approved }`                                        | Approve or reject a report submitted by a user |
+
+### Internal structure
+
+| Module            | Controllers         | Services         | Repositories        |
+| ----------------- | ------------------- | ---------------- | ------------------- |
+| **UsersModule**   | `UsersController`   | `UsersService`   | `UsersRepository`   |
+| **ReportsModule** | `ReportsController` | `ReportsService` | `ReportsRepository` |
