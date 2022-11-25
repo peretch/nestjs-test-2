@@ -1,0 +1,15 @@
+{
+  "cSpell.words": [
+    "typeorm"
+  ],
+  "sqltools.useNodeRuntime": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "database": "${workspaceFolder:my-car-value}/db.sqlite",
+      "name": "my-car-value",
+      "group": "nestjs-test"
+    }
+  ]
+}
