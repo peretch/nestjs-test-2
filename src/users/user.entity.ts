@@ -6,6 +6,7 @@ import {
   AfterUpdate,
   AfterRemove,
 } from 'typeorm';
+// ?-1 import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -16,6 +17,8 @@ export class User {
   email: string;
 
   @Column()
+  // ?-1 @Exclude() // This will be used if we want NestJS recommended way to exclude value in response
+  // ?-1 Instead we will use our own custom interceptor with specific DTO
   password: string;
 
   @AfterInsert()
