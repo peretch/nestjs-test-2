@@ -19,6 +19,7 @@ import { Serialize } from 'src/interceptors/serialzie.interceptor';
 import { UserDto } from './dtos/user.dto';
 
 @Controller('auth')
+@Serialize(UserDto)
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
@@ -31,7 +32,6 @@ export class UsersController {
   // id is string in here because is part of the URL
   // ?-1 @UseInterceptors(ClassSerializerInterceptor) // This is if we use Exclude decorator in model
   // ?-2@UseInterceptors(new SerializeInterceptor(UserDto)) // This will be moved to a custom decorator
-  @Serialize(UserDto)
   @Get('/:id')
   async findUser(@Param('id') id: string) {
     const user = await this.usersService.findOne(parseInt(id));

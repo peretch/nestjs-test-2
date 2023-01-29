@@ -6,10 +6,15 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
+
+// With this at least our decorator will allow only classes (as a way to ensure the usage of DTOs)
+interface ClassConstructor {
+  new (...args: any[]): object;
+}
 
 // Can be used as custom decorator, because it return a decorator
-export function Serialize(dto: any) {
+export function Serialize(dto: ClassConstructor) {
   return UseInterceptors(new SerializeInterceptor(dto));
 }
 
@@ -31,7 +36,7 @@ export class SerializeInterceptor implements NestInterceptor {
       map((data: any) => {
         // Run something before the response is sent out
         // console.log('Im running before response is sent out', data);
-        return plainToClass(this.dto, data, {
+        return plainToInstance(this.dto, data, {
           excludeExtraneousValues: true, // Only will show values with @Expose decorators in DTO
         });
       }),
