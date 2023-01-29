@@ -8,13 +8,15 @@ import {
   Query,
   Delete,
   NotFoundException,
-  UseInterceptors,
-  // ? ClassSerializerInterceptor,
+  // ?-1 ClassSerializerInterceptor,
+  // ?-2UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
-import { SerializeInterceptor } from 'src/interceptors/serialzie.interceptor';
+// import { SerializeInterceptor } from 'src/interceptors/serialzie.interceptor';
+import { Serialize } from 'src/interceptors/serialzie.interceptor';
+import { UserDto } from './dtos/user.dto';
 
 @Controller('auth')
 export class UsersController {
@@ -27,8 +29,9 @@ export class UsersController {
   }
 
   // id is string in here because is part of the URL
-  // ? @UseInterceptors(ClassSerializerInterceptor) // This is if we use Exclude decorator in model
-  @UseInterceptors(SerializeInterceptor)
+  // ?-1 @UseInterceptors(ClassSerializerInterceptor) // This is if we use Exclude decorator in model
+  // ?-2@UseInterceptors(new SerializeInterceptor(UserDto)) // This will be moved to a custom decorator
+  @Serialize(UserDto)
   @Get('/:id')
   async findUser(@Param('id') id: string) {
     const user = await this.usersService.findOne(parseInt(id));
